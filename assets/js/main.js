@@ -254,5 +254,33 @@
 			});
 
 		}
+		function submitForm(event) {
+			event.preventDefault(); // Prevent default form submission
+	
+			// Get form data
+			var fullname = $('#Name').val();
+			var email = $('#email').val();
+			var message = $('#message').val();
+	
+			// Send form data to backend server
+			$.ajax({
+				url: '/submit-form', // Replace with your backend endpoint
+				method: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify({ fullname: fullname, email: email, message: message }),
+				success: function(response) {
+					alert(response); // Show success message
+					$('#contact-form').trigger('reset'); // Clear form fields
+				},
+				error: function(xhr, status, error) {
+					console.error('Error submitting form:', error);
+					alert('Error submitting form. Please try again later.');
+				}
+			});
+		}
+	
+		// Event listener for form submission
+		$('#contact-form').on('submit', submitForm);
+	
 
 })(jQuery);
